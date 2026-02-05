@@ -11,6 +11,13 @@
   "function-runtime": "dotnet8",
   "function-memory-size": 512,
   "function-timeout": 30,
-  "function-handler": "TicketEmailWorker::TicketEmailWorker.Function::FunctionHandler"
-
+  "function-handler": "TicketEmailWorker::TicketEmailWorker.Function::FunctionHandler",
+  "framework": "net8.0",
+  "function-name": "TicketEmailWorker",
+  "function-description": "",
+  "package-type": "Zip",
+  "function-architecture": "x86_64",
+  "tracing-mode": "PassThrough",
+  "environment-variables": "\u0022SmtpSettings__Port\u0022=\u0022587\u0022;\u0022SmtpSettings__Server\u0022=\u0022email-smtp.ap-south-1.amazonaws.com\u0022;\u0022FlightAdmin__BccEmail\u0022=\u0022mohammed.moinashraf@gmail.com, hfida28@gmail.com\u0022;\u0022SmtpSettings__Password\u0022=\u0022BMQJ5q9MU0BeA9IqEu05Izwur6RhemM6xlkjF9gBSd8/\u0022;\u0022FlightAdmin__EmailConfirmCcEmail\u0022=\u0022\u0022;\u0022FlightAdmin__BaseURL\u0022=\u0022https://pmuwxfmcf8.execute-api.ap-south-1.amazonaws.com/Prod\u0022;\u0022SmtpSettings__Username\u0022=\u0022AKIARZAV6X6LY2UYQ6MB\u0022;\u0022FlightAdmin__EmailConfirmFromEmail\u0022=\u0022support@codetosolutions.com\u0022;\u0022FlightAdmin__EmailConfirmToEmail\u0022=\u0022mohammed.moinashraf@gmail.com\u0022",
+  "image-tag": ""
 }
