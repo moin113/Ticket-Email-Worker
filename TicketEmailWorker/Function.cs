@@ -206,14 +206,18 @@ namespace TicketEmailWorker
             ILambdaContext context,
             CancellationToken cancellationToken)
         {
-            var toEmail = configuration["FlightAdmin:EmailConfirmToEmail"] ?? "mohammedatif.shamim@gmail.com";
+            var toEmail = configuration["FlightAdmin:EmailConfirmToEmail"] ?? "mohammed.moinashraf@gmail.com";
             var fromEmail = configuration["FlightAdmin:EmailConfirmFromEmail"] ?? "support@codetosolutions.com";
             var ccEmail = configuration["FlightAdmin:EmailConfirmCcEmail"] ?? "";
+
+            context.Logger.LogLine($"✅ Admin ToEmail = {toEmail}");
 
             var emailBody = GetConfirmTicketNotificationBody(ticketDetails);
 
             var subject =
                 $"User {ticketDetails.Username} has Cancelled his flight from {ticketDetails.FromCity} to {ticketDetails.ToCity} on {ticketDetails.CancelledAt}";
+
+            context.Logger.LogLine("Email body preview (Admin): " + emailBody.Substring(0, Math.Min(200, emailBody.Length)));
 
             await emailService.SendEmail(fromEmail, toEmail, subject, ccEmail, emailBody, cancellationToken)
                 .ConfigureAwait(false);
@@ -240,10 +244,14 @@ namespace TicketEmailWorker
             var fromEmail = configuration["FlightAdmin:EmailConfirmFromEmail"] ?? "support@codetosolutions.com";
             var ccEmail = configuration["FlightAdmin:EmailConfirmCcEmail"] ?? "";
 
+            context.Logger.LogLine($"✅ User ToEmail = {toEmail}");
+
             var emailBody = GetConfirmTicketNotificationBody(ticketDetails);
 
             var subject =
                 $"As per your request, Your Ticket has been Cancelled for {ticketDetails.FromCity} to {ticketDetails.ToCity} and below is updated details";
+
+            context.Logger.LogLine("Email body preview (User): " + emailBody.Substring(0, Math.Min(200, emailBody.Length)));
 
             await emailService.SendEmail(fromEmail, toEmail, subject, ccEmail, emailBody, cancellationToken)
                 .ConfigureAwait(false);
@@ -255,19 +263,20 @@ namespace TicketEmailWorker
         private string GetConfirmTicketNotificationBody(TicketDetails ticketDetails)
         {
             FormatCompiler compiler = new FormatCompiler();
-            var template = Resource.ticket_confirmation_notify.ToString();
+            var template = Resource.ticket_confirmation_notify;
             Generator generator = compiler.Compile(template);
             generator.KeyNotFound += (obj, args) =>
             {
                 args.Substitute = "";
                 args.Handled = true;
             };
-            ticketDetails.DepartureTime = ticketDetails.DepartureTime.Substring(0, 5);
-            ticketDetails.ArrivalTime = ticketDetails.ArrivalTime.Substring(0, 5);
 
             var data = new Dictionary<string, object>
             {
-                { "TicketDetails" , ticketDetails }
+                { "TicketDetails" , ticketDetails },
+                { "FlightDate", ticketDetails.FormattedFlightDate },
+                { "DepartureTime", ticketDetails.FormattedDepartureTime },
+                { "ArrivalTime", ticketDetails.FormattedArrivalTime }
             };
             var result = generator.Render(data);
 

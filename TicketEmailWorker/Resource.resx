@@ -118,9 +118,230 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="admin_ticket_notify" xml:space="preserve">
-    <value>admin_ticket_notify.html(type:System.Byte[])</value>
+    <value>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        body { font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; }
+        .container { width: 100%; max-width: 600px; margin: 20px auto; border-top: 4px solid #005a8d; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .header { color: #005a8d; font-size: 18px; font-weight: bold; margin-bottom: 20px; }
+        .route-header { font-size: 14px; font-weight: bold; color: #005a8d; text-transform: uppercase; margin-bottom: 15px; }
+        .city-block { flex: 1; }
+        .city-code { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
+        .city-time { font-size: 14px; color: #666; }
+        .flight-info { flex: 2; text-align: center; border-left: 1px solid #eee; border-right: 1px solid #eee; padding: 0 10px; }
+        .airline { font-size: 14px; font-weight: bold; color: #005a8d; }
+        .flight-code { font-size: 14px; color: #666; }
+        .divider { height: 2px; background-color: #005a8d; margin-top: 30px; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;div class="header"&gt;Review Itinerary&lt;/div&gt;
+        &lt;div class="route-header"&gt;
+            {{TicketDetails.FromCity}} to {{TicketDetails.ToCity}} {{TicketDetails.FormattedFlightDate}}
+        &lt;/div&gt;
+        
+        &lt;table width="100%" cellspacing="0" cellpadding="0" style="margin-top: 20px;"&gt;
+            &lt;tr&gt;
+                &lt;td width="25%" align="left"&gt;
+                    &lt;div class="city-code"&gt;{{TicketDetails.FromCityCode}}&lt;/div&gt;
+                    &lt;div class="city-time"&gt;{{TicketDetails.FormattedDepartureTime}}&lt;/div&gt;
+                &lt;/td&gt;
+                &lt;td width="50%" align="center" style="border-left: 1px solid #eee; border-right: 1px solid #eee;"&gt;
+                    &lt;div class="airline"&gt;{{TicketDetails.FlightName}}&lt;/div&gt;
+                    &lt;div class="flight-code"&gt;{{TicketDetails.FlightCode}}&lt;/div&gt;
+                &lt;/td&gt;
+                &lt;td width="25%" align="right"&gt;
+                    &lt;div class="city-code"&gt;{{TicketDetails.ToCityCode}}&lt;/div&gt;
+                    &lt;div class="city-time"&gt;{{TicketDetails.FormattedArrivalTime}}&lt;/div&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+        
+        &lt;div class="divider"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</value>
   </data>
   <data name="ticket_confirmation_notify" xml:space="preserve">
-    <value>ticket-confirmation-notify.html (type:System.Byte[])</value>
+    <value>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;style&gt;
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .email-wrapper { width: 100%; padding: 20px 0; background-color: #f4f4f4; }
+        .container { width: 100%; max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .brand-header { background: linear-gradient(135deg, #005a8d 0%, #0077b6 100%); padding: 30px 20px; text-align: center; color: white; }
+        .brand-name { font-size: 28px; font-weight: bold; margin: 0; letter-spacing: 1px; }
+        .brand-tagline { font-size: 14px; margin: 5px 0 0 0; opacity: 0.9; }
+        .content { padding: 30px 25px; }
+        .cancellation-notice { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px 20px; margin-bottom: 25px; border-radius: 4px; }
+        .cancellation-notice h2 { margin: 0 0 8px 0; color: #856404; font-size: 18px; }
+        .cancellation-notice p { margin: 0; color: #856404; font-size: 14px; }
+        .section-title { font-size: 16px; font-weight: bold; color: #005a8d; margin: 25px 0 15px 0; padding-bottom: 8px; border-bottom: 2px solid #005a8d; }
+        .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .info-label { font-weight: 600; color: #666; font-size: 14px; }
+        .info-value { color: #333; font-size: 14px; text-align: right; }
+        .flight-route { background: linear-gradient(to right, #f8f9fa 0%, #e9ecef 100%); padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .route-header { font-size: 14px; font-weight: bold; color: #005a8d; text-transform: uppercase; margin-bottom: 15px; text-align: center; }
+        .flight-details { display: flex; align-items: center; justify-content: space-between; }
+        .city-block { flex: 1; text-align: center; }
+        .city-code { font-size: 24px; font-weight: bold; color: #005a8d; margin-bottom: 5px; }
+        .city-name { font-size: 12px; color: #666; margin-bottom: 8px; }
+        .city-time { font-size: 16px; color: #333; font-weight: 600; }
+        .flight-arrow { flex: 1; text-align: center; padding: 0 15px; }
+        .arrow-line { height: 2px; background-color: #005a8d; position: relative; margin: 10px 0; }
+        .arrow-line::after { content: '▶'; position: absolute; right: -8px; top: -8px; color: #005a8d; font-size: 16px; }
+        .airline-info { text-align: center; margin-top: 10px; }
+        .airline-name { font-size: 14px; font-weight: bold; color: #005a8d; }
+        .flight-code { font-size: 13px; color: #666; margin-top: 3px; }
+        .passengers-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .passengers-table th { background-color: #005a8d; color: white; padding: 12px 10px; text-align: left; font-size: 13px; font-weight: 600; }
+        .passengers-table td { padding: 12px 10px; border-bottom: 1px solid #eee; font-size: 13px; }
+        .passengers-table tr:last-child td { border-bottom: none; }
+        .passengers-table tr:nth-child(even) { background-color: #f8f9fa; }
+        .refund-box { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 2px solid #28a745; border-radius: 8px; padding: 20px; margin: 25px 0; text-align: center; }
+        .refund-label { font-size: 14px; color: #155724; margin-bottom: 8px; font-weight: 600; }
+        .refund-amount { font-size: 32px; font-weight: bold; color: #155724; margin: 0; }
+        .refund-note { font-size: 12px; color: #155724; margin-top: 8px; font-style: italic; }
+        .footer { background-color: #f8f9fa; padding: 20px 25px; text-align: center; border-top: 1px solid #dee2e6; }
+        .footer-text { font-size: 13px; color: #666; margin: 5px 0; }
+        .footer-link { color: #005a8d; text-decoration: none; }
+        .highlight { background-color: #fff3cd; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="email-wrapper"&gt;
+        &lt;div class="container"&gt;
+            &lt;!-- Brand Header --&gt;
+            &lt;div class="brand-header"&gt;
+                &lt;h1 class="brand-name"&gt;CodeToSolutions&lt;/h1&gt;
+                &lt;p class="brand-tagline"&gt;Your Trusted Travel Partner&lt;/p&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Main Content --&gt;
+            &lt;div class="content"&gt;
+                &lt;!-- Cancellation Notice --&gt;
+                &lt;div class="cancellation-notice"&gt;
+                    &lt;h2&gt;✓ Ticket Cancellation Confirmed&lt;/h2&gt;
+                    &lt;p&gt;Your booking has been successfully cancelled. Refund details are provided below.&lt;/p&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Booking Information --&gt;
+                &lt;div class="section-title"&gt;Booking Information&lt;/div&gt;
+                &lt;div class="info-row"&gt;
+                    &lt;span class="info-label"&gt;PNR Number:&lt;/span&gt;
+                    &lt;span class="info-value highlight"&gt;{{TicketDetails.PNRNumber}}&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class="info-row"&gt;
+                    &lt;span class="info-label"&gt;Passenger Name:&lt;/span&gt;
+                    &lt;span class="info-value"&gt;{{TicketDetails.Username}}&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class="info-row"&gt;
+                    &lt;span class="info-label"&gt;Email:&lt;/span&gt;
+                    &lt;span class="info-value"&gt;{{TicketDetails.EmailId}}&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class="info-row"&gt;
+                    &lt;span class="info-label"&gt;Phone:&lt;/span&gt;
+                    &lt;span class="info-value"&gt;{{TicketDetails.PhoneNo}}&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class="info-row"&gt;
+                    &lt;span class="info-label"&gt;Booking Date:&lt;/span&gt;
+                    &lt;span class="info-value"&gt;{{TicketDetails.FormattedRequestedDate}}&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class="info-row"&gt;
+                    &lt;span class="info-label"&gt;Cancellation Date:&lt;/span&gt;
+                    &lt;span class="info-value"&gt;{{TicketDetails.FormattedCancelledAt}}&lt;/span&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Flight Details --&gt;
+                &lt;div class="section-title"&gt;Flight Details&lt;/div&gt;
+                &lt;div class="flight-route"&gt;
+                    &lt;div class="route-header"&gt;
+                        {{TicketDetails.FromCity}} to {{TicketDetails.ToCity}} • {{TicketDetails.FormattedFlightDate}}
+                    &lt;/div&gt;
+                    &lt;div class="flight-details"&gt;
+                        &lt;div class="city-block"&gt;
+                            &lt;div class="city-code"&gt;{{TicketDetails.FromCityCode}}&lt;/div&gt;
+                            &lt;div class="city-name"&gt;{{TicketDetails.FromCity}}&lt;/div&gt;
+                            &lt;div class="city-time"&gt;{{TicketDetails.FormattedDepartureTime}}&lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="flight-arrow"&gt;
+                            &lt;div class="arrow-line"&gt;&lt;/div&gt;
+                            &lt;div class="airline-info"&gt;
+                                &lt;div class="airline-name"&gt;{{TicketDetails.FlightName}}&lt;/div&gt;
+                                &lt;div class="flight-code"&gt;{{TicketDetails.FlightCode}}&lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="city-block"&gt;
+                            &lt;div class="city-code"&gt;{{TicketDetails.ToCityCode}}&lt;/div&gt;
+                            &lt;div class="city-name"&gt;{{TicketDetails.ToCity}}&lt;/div&gt;
+                            &lt;div class="city-time"&gt;{{TicketDetails.FormattedArrivalTime}}&lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Passenger Details --&gt;
+                &lt;div class="section-title"&gt;Passenger Details&lt;/div&gt;
+                &lt;table class="passengers-table"&gt;
+                    &lt;thead&gt;
+                        &lt;tr&gt;
+                            &lt;th&gt;Name&lt;/th&gt;
+                            &lt;th&gt;Type&lt;/th&gt;
+                            &lt;th&gt;Seat&lt;/th&gt;
+                            &lt;th&gt;Ticket Number&lt;/th&gt;
+                        &lt;/tr&gt;
+                    &lt;/thead&gt;
+                    &lt;tbody&gt;
+                        {{#each TicketDetails.PassengerDetails}}
+                        &lt;tr&gt;
+                            &lt;td&gt;{{Title}} {{FirstName}} {{LastName}}&lt;/td&gt;
+                            &lt;td&gt;{{#if IsAdult}}Adult{{/if}}{{#if IsChild}}Child{{/if}}{{#if IsInfant}}Infant{{/if}}&lt;/td&gt;
+                            &lt;td&gt;{{SeatNumber}}&lt;/td&gt;
+                            &lt;td&gt;{{TicketNumber}}&lt;/td&gt;
+                        &lt;/tr&gt;
+                        {{/each}}
+                    &lt;/tbody&gt;
+                &lt;/table&gt;
+
+                &lt;!-- Payment Summary --&gt;
+                &lt;div class="section-title"&gt;Payment Summary&lt;/div&gt;
+                &lt;div class="info-row"&gt;
+                    &lt;span class="info-label"&gt;Original Amount Paid:&lt;/span&gt;
+                    &lt;span class="info-value"&gt;₹{{TicketDetails.TotalAmount}}&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class="info-row"&gt;
+                    &lt;span class="info-label"&gt;Number of Passengers:&lt;/span&gt;
+                    &lt;span class="info-value"&gt;{{TicketDetails.NumberOfSeat}}&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class="info-row"&gt;
+                    &lt;span class="info-label"&gt;Transaction ID:&lt;/span&gt;
+                    &lt;span class="info-value"&gt;{{TicketDetails.TransactionId}}&lt;/span&gt;
+                &lt;/div&gt;
+
+                &lt;!-- Refund Information --&gt;
+                &lt;div class="refund-box"&gt;
+                    &lt;div class="refund-label"&gt;Refund Amount to be Credited&lt;/div&gt;
+                    &lt;div class="refund-amount"&gt;₹{{TicketDetails.RefundAmount}}&lt;/div&gt;
+                    &lt;div class="refund-note"&gt;The refund will be processed to your original payment method within 5-7 business days&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- Footer --&gt;
+            &lt;div class="footer"&gt;
+                &lt;p class="footer-text"&gt;&lt;strong&gt;Need Help?&lt;/strong&gt;&lt;/p&gt;
+                &lt;p class="footer-text"&gt;Contact us at &lt;a href="mailto:support@codetosolutions.com" class="footer-link"&gt;support@codetosolutions.com&lt;/a&gt;&lt;/p&gt;
+                &lt;p class="footer-text"&gt;or call us at +91-XXXXXXXXXX&lt;/p&gt;
+                &lt;p class="footer-text" style="margin-top: 15px; font-size: 12px; color: #999;"&gt;
+                    © 2026 CodeToSolutions. All rights reserved.
+                &lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</value>
   </data>
 </root>

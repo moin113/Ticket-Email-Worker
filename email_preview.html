@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .email-wrapper { width: 100%; padding: 20px 0; background-color: #f4f4f4; }
+        .container { width: 100%; max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .brand-header { background: linear-gradient(135deg, #005a8d 0%, #0077b6 100%); padding: 30px 20px; text-align: center; color: white; }
+        .brand-name { font-size: 28px; font-weight: bold; margin: 0; letter-spacing: 1px; }
+        .brand-tagline { font-size: 14px; margin: 5px 0 0 0; opacity: 0.9; }
+        .content { padding: 30px 25px; }
+        .cancellation-notice { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px 20px; margin-bottom: 25px; border-radius: 4px; }
+        .cancellation-notice h2 { margin: 0 0 8px 0; color: #856404; font-size: 18px; }
+        .cancellation-notice p { margin: 0; color: #856404; font-size: 14px; }
+        .section-title { font-size: 16px; font-weight: bold; color: #005a8d; margin: 25px 0 15px 0; padding-bottom: 8px; border-bottom: 2px solid #005a8d; }
+        .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .info-label { font-weight: 600; color: #666; font-size: 14px; }
+        .info-value { color: #333; font-size: 14px; text-align: right; }
+        .flight-route { background: linear-gradient(to right, #f8f9fa 0%, #e9ecef 100%); padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .route-header { font-size: 14px; font-weight: bold; color: #005a8d; text-transform: uppercase; margin-bottom: 15px; text-align: center; }
+        .flight-details { display: flex; align-items: center; justify-content: space-between; }
+        .city-block { flex: 1; text-align: center; }
+        .city-code { font-size: 24px; font-weight: bold; color: #005a8d; margin-bottom: 5px; }
+        .city-name { font-size: 12px; color: #666; margin-bottom: 8px; }
+        .city-time { font-size: 16px; color: #333; font-weight: 600; }
+        .flight-arrow { flex: 1; text-align: center; padding: 0 15px; }
+        .arrow-line { height: 2px; background-color: #005a8d; position: relative; margin: 10px 0; }
+        .arrow-line::after { content: '▶'; position: absolute; right: -8px; top: -8px; color: #005a8d; font-size: 16px; }
+        .airline-info { text-align: center; margin-top: 10px; }
+        .airline-name { font-size: 14px; font-weight: bold; color: #005a8d; }
+        .flight-code { font-size: 13px; color: #666; margin-top: 3px; }
+        .passengers-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .passengers-table th { background-color: #005a8d; color: white; padding: 12px 10px; text-align: left; font-size: 13px; font-weight: 600; }
+        .passengers-table td { padding: 12px 10px; border-bottom: 1px solid #eee; font-size: 13px; }
+        .passengers-table tr:last-child td { border-bottom: none; }
+        .passengers-table tr:nth-child(even) { background-color: #f8f9fa; }
+        .refund-box { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 2px solid #28a745; border-radius: 8px; padding: 20px; margin: 25px 0; text-align: center; }
+        .refund-label { font-size: 14px; color: #155724; margin-bottom: 8px; font-weight: 600; }
+        .refund-amount { font-size: 32px; font-weight: bold; color: #155724; margin: 0; }
+        .refund-note { font-size: 12px; color: #155724; margin-top: 8px; font-style: italic; }
+        .footer { background-color: #f8f9fa; padding: 20px 25px; text-align: center; border-top: 1px solid #dee2e6; }
+        .footer-text { font-size: 13px; color: #666; margin: 5px 0; }
+        .footer-link { color: #005a8d; text-decoration: none; }
+        .highlight { background-color: #fff3cd; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <div class="container">
+            <!-- Brand Header -->
+            <div class="brand-header">
+                <h1 class="brand-name">CodeToSolutions</h1>
+                <p class="brand-tagline">Your Trusted Travel Partner</p>
+            </div>
+
+            <!-- Main Content -->
+            <div class="content">
+                <!-- Cancellation Notice -->
+                <div class="cancellation-notice">
+                    <h2>✓ Ticket Cancellation Confirmed</h2>
+                    <p>Your booking has been successfully cancelled. Refund details are provided below.</p>
+                </div>
+
+                <!-- Booking Information -->
+                <div class="section-title">Booking Information</div>
+                <div class="info-row">
+                    <span class="info-label">PNR Number:</span>
+                    <span class="info-value highlight">PNR123456789</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Passenger Name:</span>
+                    <span class="info-value">Mohammed Moin Ashraf</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value">mohammed.moinashraf@gmail.com</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Phone:</span>
+                    <span class="info-value">+91-9876543210</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Booking Date:</span>
+                    <span class="info-value">25/01/2026</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Cancellation Date:</span>
+                    <span class="info-value">05/02/2026 19:24</span>
+                </div>
+
+                <!-- Flight Details -->
+                <div class="section-title">Flight Details</div>
+                <div class="flight-route">
+                    <div class="route-header">
+                        Kolkata to Durgapur • 30/11/2024
+                    </div>
+                    <div class="flight-details">
+                        <div class="city-block">
+                            <div class="city-code">KOL</div>
+                            <div class="city-name">Kolkata</div>
+                            <div class="city-time">17:00 HRS</div>
+                        </div>
+                        <div class="flight-arrow">
+                            <div class="arrow-line"></div>
+                            <div class="airline-info">
+                                <div class="airline-name">Flight-Indigo</div>
+                                <div class="flight-code">F002</div>
+                            </div>
+                        </div>
+                        <div class="city-block">
+                            <div class="city-code">DUG</div>
+                            <div class="city-name">Durgapur</div>
+                            <div class="city-time">19:00 HRS</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Passenger Details -->
+                <div class="section-title">Passenger Details</div>
+                <table class="passengers-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Seat</th>
+                            <th>Ticket Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mr. Mohammed Moin Ashraf</td>
+                            <td>Adult</td>
+                            <td>12A</td>
+                            <td>TKT987654321</td>
+                        </tr>
+                        <tr>
+                            <td>Mrs. Sarah Ashraf</td>
+                            <td>Adult</td>
+                            <td>12B</td>
+                            <td>TKT987654322</td>
+                        </tr>
+                        <tr>
+                            <td>Master Ali Ashraf</td>
+                            <td>Child</td>
+                            <td>12C</td>
+                            <td>TKT987654323</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Payment Summary -->
+                <div class="section-title">Payment Summary</div>
+                <div class="info-row">
+                    <span class="info-label">Original Amount Paid:</span>
+                    <span class="info-value">₹15,000</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Number of Passengers:</span>
+                    <span class="info-value">3</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Transaction ID:</span>
+                    <span class="info-value">TXN20260205192400</span>
+                </div>
+
+                <!-- Refund Information -->
+                <div class="refund-box">
+                    <div class="refund-label">Refund Amount to be Credited</div>
+                    <div class="refund-amount">₹13,500</div>
+                    <div class="refund-note">The refund will be processed to your original payment method within 5-7 business days</div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <p class="footer-text"><strong>Need Help?</strong></p>
+                <p class="footer-text">Contact us at <a href="mailto:support@codetosolutions.com" class="footer-link">support@codetosolutions.com</a></p>
+                <p class="footer-text">or call us at +91-XXXXXXXXXX</p>
+                <p class="footer-text" style="margin-top: 15px; font-size: 12px; color: #999;">
+                    © 2026 CodeToSolutions. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

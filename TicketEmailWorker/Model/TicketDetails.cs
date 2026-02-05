@@ -121,5 +121,14 @@ namespace TicketEmailWorker.Model
             }
         }
 
+        public string FormattedCancelledAt
+        {
+            get
+            {
+                return CancelledAt.HasValue ? CancelledAt.Value.ToString("dd/MM/yyyy HH:mm") : string.Empty;
+            }
+        }
+
+
     }
 }
