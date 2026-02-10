@@ -1,58 +1,4 @@
-﻿//using Amazon.Lambda.Core;
-//using Microsoft.EntityFrameworkCore;
-//using Microsoft.Extensions.Configuration;
-//using Microsoft.Extensions.DependencyInjection;
-//using System.Threading;
-//using TicketEmailWorker.Contracts;
-//using TicketEmailWorker.EFDbContext;
-//using TicketEmailWorker.Email;
-//using TicketEmailWorker.TicketDetails;
-
-//[assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
-
-//namespace TicketEmailWorker;
-
-//public class Function
-//{
-//    private static ServiceProvider? _serviceProvider;
-
-//    public async Task FunctionHandler(TicketEmailRequest request, ILambdaContext context)
-//    {
-//        if (request == null || request.TicketDetailId <= 0)
-//        {
-//            context.Logger.LogLine("❌ Invalid request received");
-//            return;
-//        }
-
-//        context.Logger.LogLine($"✅ TicketEmailWorker started for TicketDetailId = {request.TicketDetailId}");
-
-//        // Call Flight API endpoint to get ticket details using refit library
-
-//        await SendCancelNotificationToAdmin(ticketDetails).ConfigureAwait(false);
-
-//        // Pass the existing command instance to the handler
-//        await SendCancellationNotificationToUser(ticketDetails).ConfigureAwait(false);
-
-//        // Step 1 Call Refit and get ticket details
-//        // Step 2 Send email to admin and user
-
-//    }
-
-//    private async Task SendCancelNotificationToAdmin(TicketDetails ticketDetails)
-//    {
-//        // Implementation for sending cancellation notification to admin
-//    }
-
-//    private async Task SendCancellationNotificationToUser(TicketDetails ticketDetails)
-//    {
-//        // Implementation for sending cancellation notification to user
-//    }
-
-
-//}
-
-
-
+﻿
 using Amazon.Auth.AccessControlPolicy;
 using Amazon.Lambda.Core;
 using Microsoft.Extensions.Configuration;
@@ -94,6 +40,7 @@ namespace TicketEmailWorker
             var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
             var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>();
             var flightApi = scope.ServiceProvider.GetRequiredService<IFlightApiClient>();
+            var emailLogApi = scope.ServiceProvider.GetRequiredService<IEmailLogApiClient>();
 
             try
             {
@@ -115,7 +62,10 @@ namespace TicketEmailWorker
                 await SendCancellationNotificationToUser(ticketDetails, configuration, emailService, context, CancellationToken.None);
 
                 context.Logger.LogLine("✅ All cancellation emails sent successfully!");
+
+                await LogEmailToFlightApi(emailLogApi, ticketDetails, configuration, context);
             }
+
             catch (ApiException apiEx)
             {
                 context.Logger.LogLine($"❌ FlightAPI Error: {apiEx.StatusCode} | {apiEx.Message}");
@@ -127,41 +77,6 @@ namespace TicketEmailWorker
             }
         }
 
-        // ✅ DI Setup
-        //private static ServiceProvider BuildServiceProvider()
-        //{
-        //    var services = new ServiceCollection();
-
-        //    // ✅ Load appsettings.json (local)
-        //    // AWS Lambda me real config tum ENV Variables se dena
-        //    var configuration = new ConfigurationBuilder()
-        //    .SetBasePath(AppContext.BaseDirectory)
-        //    .AddJsonFile("appsettings.json", optional: false)
-        //    .AddEnvironmentVariables()
-        //    .Build();
-
-
-
-        //    services.AddSingleton<IConfiguration>(configuration);
-
-        //    // ✅ Email Service
-        //    services.AddScoped<IEmailService, EmailService>();
-
-        //    // ✅ Refit Client
-        //    // appsettings.json -> FlightAdmin:BaseURL use karna
-        //    var baseUrl = configuration["FlightAdmin:BaseURL"];
-
-        //    if (string.IsNullOrWhiteSpace(baseUrl))
-        //        throw new Exception("❌ FlightAdmin:BaseURL missing in appsettings / ENV");
-
-        //    services.AddRefitClient<IFlightApiClient>()
-        //        .ConfigureHttpClient(c =>
-        //        {
-        //            c.BaseAddress = new Uri(baseUrl);
-        //        });
-
-        //    return services.BuildServiceProvider();
-        //}
 
 
         private static ServiceProvider BuildServiceProvider()
@@ -191,12 +106,41 @@ namespace TicketEmailWorker
                     c.BaseAddress = new Uri(baseUrl);
                 });
 
+            services.AddRefitClient<IEmailLogApiClient>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(baseUrl));
+
+
             return services.BuildServiceProvider();
+
         }
+        // ================== EMAIL LOG ==================
+        private async Task LogEmailToFlightApi(
+            IEmailLogApiClient emailLogApi,
+            TicketDetails ticketDetails,
+            IConfiguration configuration,
+            ILambdaContext context)
+        {
+            try
+            {
+                var subject =
+                    $"Ticket Cancelled for {ticketDetails.FromCity} to {ticketDetails.ToCity}";
 
+                await emailLogApi.LogEmailAsync(new
+                {
+                    Subject = subject,
+                    ToEmail = ticketDetails.EmailId,
+                    CCEmail = configuration["FlightAdmin:EmailConfirmCcEmail"] ?? "",
+                    BccEmail = "",
+                    FromEmail = configuration["FlightAdmin:EmailConfirmFromEmail"]
+                });
 
-
-
+                context.Logger.LogLine("✅ Email log saved in FlightAPI");
+            }
+            catch (Exception ex)
+            {
+                context.Logger.LogLine($"⚠️ Email log failed but ignored: {ex.Message}");
+            }
+        }
 
         // ✅ Admin Email
         private async Task SendCancelNotificationToAdmin(
