@@ -125,13 +125,14 @@ namespace TicketEmailWorker
                 var subject =
                     $"Ticket Cancelled for {ticketDetails.FromCity} to {ticketDetails.ToCity}";
 
-                await emailLogApi.LogEmailAsync(new
+                await emailLogApi.LogEmailAsync(new EmailLog
                 {
                     Subject = subject,
                     ToEmail = ticketDetails.EmailId,
                     CCEmail = configuration["FlightAdmin:EmailConfirmCcEmail"] ?? "",
                     BccEmail = "",
-                    FromEmail = configuration["FlightAdmin:EmailConfirmFromEmail"]
+                    FromEmail = configuration["FlightAdmin:EmailConfirmFromEmail"],
+                    SentAt = DateTime.Now,
                 });
 
                 context.Logger.LogLine("✅ Email log saved in FlightAPI");
